@@ -103,6 +103,11 @@ func LoadConfig(path string) (*Config, error) {
 }
 ```
 
+### 配置logger
+
+
+### 配置gorm
+
 ## go_structure_standard
 **go包名的规范**：全小写、无下划线、见名知义、简洁不冗余，比如utils/valid是合规的，global合规但「慎用」，这是 Go 官方明确要求的。
 ```

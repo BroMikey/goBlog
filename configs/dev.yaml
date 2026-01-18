@@ -3,8 +3,11 @@ mysql:
   port: 3306
   dbname: dev_db
   username: root
-  password: rootpassword
-  log_level: dev
+  password: 123456
+  config: "parseTime=true&charset=utf8mb4&loc=Local"
+  max_idle_conn: 10
+  max_open_conn: 100
+  log_level: dev  # possible values: debug, dev
 
 logger:
   level: info
