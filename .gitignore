@@ -1,0 +1,75 @@
+
+# --- 操作系统生成文件 (OS Generated) ---
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# --- 编辑器/IDE 临时文件 (Editor Temp) ---
+# Vim / Neovim (非常重要，防止提交 swap 文件)
+*.swp
+*.swo
+*.swn
+Session.vim
+.netrwhist
+
+# VS Code (通常 dotfiles 会同步 settings.json，但不要同步本地历史)
+.vscode/
+.vscode-test/
+.history/
+*.code-workspace
+
+# JetBrains / IntelliJ
+.idea/
+*.iml
+
+# --- 安全与隐私 (Security & Privacy - 绝对不能提交) ---
+# Shell 历史记录 (包含你输入的敏感命令)
+.bash_history
+.zsh_history
+.lesshst
+.mysql_history
+.psql_history
+.node_repl_history
+.python_history
+
+# SSH & GPG 密钥目录
+.ssh/
+.gnupg/
+
+# 敏感配置文件
+.env
+.netrc
+.npmrc
+_netrc
+
+# --- 常见语言/包管理器垃圾 (Misc) ---
+# 即使 dotfiles 里有一些脚本，也不应该提交依赖包
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+__pycache__/
+*.py[cod]
+.venv/
+env/
+dist/
+build/
+
+# --- 其他 ---
+# 各种日志文件
+*.log
+*.bak
+*.tmp

@@ -12,6 +12,97 @@
 
 #### vue3
 
+## 开发流程
+
+### 读取配置
+
+1.配置使用规范
+2.配置只在启动阶段加载一次
+3.不使用全局 Config
+4.不在业务层 import bootstrap
+5.通过构造函数显式传递依赖
+6.bootstrap 只做“初始化与组装”
+
+yaml 写入配置文件，然后通过config/config.go解析配置，在main.go中通过返回值使用！
+```yaml
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  dbname: dev_db
+  username: root
+  password: rootpassword
+  log_level: dev
+
+logger:
+  level: info
+  prefix: "[DEV] "
+  director: log
+  show_line: true
+  log_in_console: true
+
+system:
+  host: "0.0.0.0"
+  port: 8080
+  env: dev
+
+```
+
+
+```go
+package bootstrap
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/goccy/go-yaml"
+)
+
+type Config struct {
+	Mysql  Mysql  `yaml:"mysql"`
+	Logger Logger `yaml:"logger"`
+	System System `yaml:"system"`
+}
+
+type Mysql struct {
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	DBname   string `yaml:"dbname"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+	LogLevel string `yaml:"log_level"`
+}
+
+type Logger struct {
+	Level        string `yaml:"level"`
+	Prefix       string `yaml:"prefix"`
+	Director     string `yaml:"director"`
+	ShowLine     bool   `yaml:"show_line"`
+	LogInConsole bool   `yaml:"log_in_console"`
+}
+
+type System struct {
+	Host string `yaml:"host"`
+	Port int    `yaml:"port"`
+	Env  string `yaml:"env"`
+}
+
+func LoadConfig(path string) (*Config, error) {
+
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("read config file failed: %w", err)
+	}
+
+	var c Config
+	if err := yaml.Unmarshal(b, &c); err != nil {
+		return nil, fmt.Errorf("unmarshal config file failed: %w", err)
+	}
+
+	return &c, nil
+}
+```
+
 ## go_structure_standard
 **go包名的规范**：全小写、无下划线、见名知义、简洁不冗余，比如utils/valid是合规的，global合规但「慎用」，这是 Go 官方明确要求的。
 ```
@@ -23,7 +114,7 @@
 ├── bootstrap/                  # 项目启动初始化
 │   ├── config.go               # 配置加载（viper/env）
 │   ├── logger.go               # 日志初始化
-│   ├── database.go             # MySQL 初始化
+│   ├── gorm.go                 # MySQL 初始化
 │   ├── redis.go                # Redis 初始化
 │   ├── router.go               # Gin 路由注册
 │   └── app.go                  # 应用启动编排（聚合初始化）
