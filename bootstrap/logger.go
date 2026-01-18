@@ -60,6 +60,7 @@ func (f *LogFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 // InitLogger initializes and returns a configured logrus.Logger instance.
 // It receives a Config pointer (call LoadConfig first to obtain it).
 func InitLogger(conf *Config) *logrus.Logger {
+
 	cfg := conf.Logger
 
 	var mlog *logrus.Logger = logrus.New()
